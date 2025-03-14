@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 #2.5 - experiment to demonstrate the difficulties of the sample-average methods for nonstationary problems, 
 # i. e. problems where reward probabilities change with time
-def run_bandit_experiment(steps=10000, epsilon=0.1, k=10, alpha=0.1, non_stationary=True, initial_Q=0.0, use_sample_avg_method = True):
+def run_bandit_experiment(steps=10000, epsilon=0.1, k=10, alpha=0.1, non_stationary=True, initial_Q=0.0, use_sample_avg_method = True, use_epsilon_greedy = True, c=2):
 
     if non_stationary:
         q_star = np.zeros(k) #np.random.normal(0, 1, k)# #true value (expected reward) of action a; 
@@ -22,14 +22,17 @@ def run_bandit_experiment(steps=10000, epsilon=0.1, k=10, alpha=0.1, non_station
     #perform the experiment
     for run in range(steps):
 
-        # Find all indices where Q is at its maximum, Randomly select one of the max indices
-        max_index = np.random.choice(np.flatnonzero(Q == Q.max()))
+        if use_epsilon_greedy:
+            # Find all indices where Q is at its maximum, Randomly select one of the max indices
+            max_index = np.random.choice(np.flatnonzero(Q == Q.max()))
 
-        # Epsilon-greedy action selection
-        if np.random.rand() < epsilon:
-            i = np.random.randint(k)  # Pick any action randomly
-        else:
-            i = max_index  # Pick best action
+            # Epsilon-greedy action selection
+            if np.random.rand() < epsilon:
+                i = np.random.randint(k)  # Pick any action randomly
+            else:
+                i = max_index  # Pick best action
+        else: #use UCB (upper confidence bound) action selection
+                i = np.argmax(Q + c * np.sqrt(np.log(run)/N))  # Index of best action; where best = best balance between exploitation Q and exploration (high uncertainty -> higher chance that action might be of high value)
 
         reward = np.random.normal(q_star[i], 1) #the reward in a specific iteration fluctuates around the expected q_star value
         N[i] += 1
@@ -82,12 +85,12 @@ def plot_results(avg_rewards, perc_optimal_actions, labels):
 
 
 # Run two experiments (example: different Q initialization)
-avg_reward_1, perc_optimal_1 = run_bandit_experiment(initial_Q=0.0, non_stationary=False, steps=1000)  # Normal Q-init
-avg_reward_2, perc_optimal_2 = run_bandit_experiment(initial_Q=5.0, non_stationary=False, steps=1000)  # Optimistic Q-init
+avg_reward_1, perc_optimal_1 = run_bandit_experiment(initial_Q=0.0, non_stationary=False, steps=1000, use_sample_avg_method = True, use_epsilon_greedy=True)  # Normal Q-init
+avg_reward_2, perc_optimal_2 = run_bandit_experiment(initial_Q=0.0, non_stationary=False, steps=1000, use_sample_avg_method = True, use_epsilon_greedy=False)  # Optimistic Q-init
 
 # Call the updated plot_results function
 plot_results(
     avg_rewards=[avg_reward_1, avg_reward_2],
     perc_optimal_actions=[perc_optimal_1, perc_optimal_2],
-    labels=["Q=0 (Baseline)", "Q=5 (Optimistic)"]
+    labels=["epsilon greedy", "UCB action selection"]
 )
