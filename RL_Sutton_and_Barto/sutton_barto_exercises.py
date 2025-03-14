@@ -5,13 +5,15 @@ import matplotlib.pyplot as plt
 # i. e. problems where reward probabilities change with time
 def run_bandit_experiment(steps=10000, epsilon=0.1, k=10, alpha=0.1):
 
-    q_star = np.zeros(k) #true value (expected reward) of action a
+    q_star = np.zeros(k) #np.random.normal(0, 1, k)# #true value (expected reward) of action a; 
+                        # for stationary case, select from normal distribution rather than starting with all zeros
     Q = np.zeros(k) #stores best estimate of q_star for each action (=slot machine) based on all previous selections
     N = np.zeros(k) #counts how often each action (=slot machine) was selected
 
     perc_of_optimal_action = np.zeros(steps) #pre-allocate space for storing results
     avg_reward = np.zeros(steps) #pre-allocate space for storing results
 
+    print("Initial q_star values:", q_star)  # BEFORE
     #perform the experiment
     for run in range(steps):
 
@@ -26,9 +28,15 @@ def run_bandit_experiment(steps=10000, epsilon=0.1, k=10, alpha=0.1):
         reward = np.random.normal(q_star[i], 1) #the reward in a specific iteration fluctuates around the expected q_star value
         N[i] += 1
 
-        alpha = 0.1
-        Q[i] += alpha * (reward - Q[i]) #constant stepsize alpha means less significance on rewards that are further in the past 
+        use_sample_avg_method = False
+        if use_sample_avg_method:
+            Q[i] += (1 / N[i]) * (reward - Q[i])  # Sample-average instead of constant α
+
+        else:
+            alpha = 0.1
+            Q[i] += alpha * (reward - Q[i]) #constant stepsize alpha means less significance on rewards that are further in the past 
                                     # (desirable for nonstationary problems)
+
         
         optimal_action = np.argmax(q_star)  # Index of best action
         perc_of_optimal_action[run] = 1/(run+1) * (perc_of_optimal_action[max(0, run-1)]*run + (i == optimal_action))
@@ -36,7 +44,7 @@ def run_bandit_experiment(steps=10000, epsilon=0.1, k=10, alpha=0.1):
 
         #nonstationary problem, i. e. q_star values change (random walk)
         q_star += np.random.normal(loc=0.0, scale=0.01, size=10)
-    
+    print("Final q_star values:", q_star)  # AFTER (for nonstationary case)
     return avg_reward, perc_of_optimal_action
 
 def plot_results(avg_reward, perc_of_optimal_action):
