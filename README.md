@@ -8,7 +8,7 @@ This repository documents my hands-on exploration of reinforcement learning (RL)
 
 | Week | Project | Description |
 |------|---------|-------------|
-| 1 | [CartPole DQN](./week01_dqn_cartpole/) | Implementation of a 2D cart balancing a pole (1 DOF) using Deep Q-Learning. Based on the [PyTorch RL tutorial](https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html). |
+| 1 | [CartPole DQN](./CartPole_DQN) | Implementation of a 2D cart balancing a pole (1 DOF) using Deep Q-Learning. Based on the [PyTorch RL tutorial](https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html). |
 | 2 | [MuJoCo PPO/SAC](./week02_sac_halfcheetah/) | PPO and SAC applied to continuous control tasks like `HalfCheetah` and `Walker2d`. |
 | 3 | [Custom RL Baselines](./week03_rl_baselines/) | Reimplementation of PPO and SAC from scratch with GAE and modular PyTorch code. |
 | 4 | [Robotic Arm Grasping (Isaac Gym)](./week04_franka_grasping/) | Use PPO/SAC to teach a simulated Franka Panda arm to grasp a cube. |
