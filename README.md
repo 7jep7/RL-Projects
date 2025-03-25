@@ -31,6 +31,14 @@ This repository documents my hands-on exploration of reinforcement learning (RL)
 
 ---
 
+## 🏅Hackathon: [Robo Innovate 2025](https://www.tum-venture-labs.de/events/robo-innovate-hackathon-2025/) - 2nd place!
+
+- Participated in robo.innovate 2025 at TUM in Munich, Germany. 4 days, team of 12, won the second main price
+- Challenge (posed & sponsored by BMW): use two [Franka Research 3](https://franka.de/products/franka-research-3) robotic arms with 7 DOFs each to unpack car parts from unsealed plastic bags
+- [Github repo](https://github.com/sudarshan2401/roboinnovate) & [Pitch deck](https://www.canva.com/design/DAGiFqwgkLo/052YY4cXjQ89xvBcekgJjQ/view?utm_content=DAGiFqwgkLo&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h505e5472a7)
+
+---
+
 ### 📚 Lectures & Courses & Supplemental reading
 
 - [**David Silver's Reinforcement Learning Course**](https://www.youtube.com/watch?v=2pWv7GOvuf0)
