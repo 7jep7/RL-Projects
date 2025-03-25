@@ -31,6 +31,19 @@ This repository documents my hands-on exploration of reinforcement learning (RL)
 
 ---
 
+### 📚 Lectures & Courses & Supplemental reading
+
+- [**David Silver's Reinforcement Learning Course**](https://www.youtube.com/watch?v=2pWv7GOvuf0)
+  - Covers fundamentals: MDPs, dynamic programming, Monte Carlo, TD learning, Q-learning, policy gradients.
+
+- [**Reinforcement Learning Specialization (University of Alberta - Coursera)**](https://www.coursera.org/specializations/reinforcement-learning)
+  - Focuses on practical implementation, bandits, prediction/control methods, and function approximation.
+
+- [**Reinforcement Learning: An Introduction** by Sutton & Barto](https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf)
+  - Primary reference for both the Silver and Alberta courses.
+
+---
+
 ## 📸 Demo Media
 
 > Each project folder includes sample output videos, training logs, and architecture diagrams. A short demo reel will be available after Week 12.
