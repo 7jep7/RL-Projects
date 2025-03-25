@@ -1,5 +1,10 @@
 import torch.nn as nn
+import torch.nn.functional as F
 
+"""
+DQN = Deep Q-Network. RL algorithm where a neural network is used to approximate the Q-value function. 
+    Extension of traditional Q-learning that allows the agent to handle high-dimensional state spaces (e g images)."
+"""
 class DQN(nn.Module):
 
     def __init__(self, n_observations, n_actions):
