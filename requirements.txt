@@ -1,0 +1,19 @@
+# Core
+numpy
+matplotlib
+requests
+
+# Jupyter support
+jupyter
+ipykernel
+ipywidgets
+
+# Optional: nice to have for notebooks and plots
+pandas
+seaborn
+
+# Deep RL / AI (add only if used)
+torch
+gymnasium
+stable-baselines3
+
