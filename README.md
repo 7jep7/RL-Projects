@@ -6,6 +6,19 @@ This repository documents my hands-on exploration of reinforcement learning (RL)
 
 ## 📚 Table of Contents
 
+RL_Projects/
+├── scripts/            # Training and evaluation scripts
+├── models/             # Trained agents (e.g. PPO models)
+├── logs/               # TensorBoard logs
+├── envs/               # (Optional) custom env wrappers
+└── README.md           # You're here!
+
+🧠 Use the centralized `scripts/`, `models/`, and `logs/` folders for running core environments like:
+- `LunarLander-v3`
+- `HalfCheetah-v3`
+- `CartPole-v1`
+This approach ensures consistent logging, versioning, and ease of comparison across algorithms.
+
 | Week | Project | Description |
 |------|---------|-------------|
 | 1 | [CartPole DQN](./CartPole_DQN) | Implementation of a 2D cart balancing a pole (1 DOF) using Deep Q-Learning. Based on the [PyTorch RL tutorial](https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html). |
