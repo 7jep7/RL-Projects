@@ -4,17 +4,26 @@ This repository documents my hands-on exploration of reinforcement learning (RL)
 
 ---
 
-## 📚 Table of Contents
-
 ## 📁 Project Structure
 
-RL_Projects/ ├── scripts/ # Training and evaluation scripts ├── models/ # Trained agents (e.g. PPO models) ├── logs/ # TensorBoard logs ├── envs/ # (Optional) custom environment wrappers or configs └── README.md # You're here!
+```text
+RL_Projects/
+├── scripts/        # Training and evaluation scripts
+├── models/         # Trained agents (e.g. PPO models)
+├── logs/           # TensorBoard logs
+├── envs/           # (Optional) custom env wrappers or configs
+└── README.md       # You're here!
+```
 
 🧠 Use the centralized `scripts/`, `models/`, and `logs/` folders for running core environments like:
 - `LunarLander-v3`
 - `HalfCheetah-v3`
 - `CartPole-v1`
 This approach ensures consistent logging, versioning, and ease of comparison across algorithms.
+
+---
+
+## 📚 Table of Contents
 
 | Week | Project | Description |
 |------|---------|-------------|
