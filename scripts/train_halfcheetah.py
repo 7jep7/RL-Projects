@@ -1,26 +1,50 @@
-from stable_baselines3 import PPO
+"""
+Train PPO on HalfCheetah-v5 using stable-baselines3.
+
+This script sets up the environment, initializes the agent, trains it, 
+and logs metrics for TensorBoard. The trained model is saved to disk.
+
+Structure:
+- env: HalfCheetah-v5 (17D obs, 6D continuous action)
+- algo: PPO (with MLP policy)
+- logging: logs/halfcheetah/
+- model output: models/ppo_halfcheetah.zip
+"""
+
+import os
 import gymnasium as gym
-import time
+from stable_baselines3 import PPO
+from stable_baselines3.common.monitor import Monitor
+from stable_baselines3.common.logger import configure
 
-# Load your saved model
-model = PPO.load("ppo_lunarlander")
+# Create output folders
+os.makedirs("logs/halfcheetah", exist_ok=True)
+os.makedirs("models", exist_ok=True)
 
-# Create a renderable environment
-env = gym.make("LunarLander-v3", render_mode="human")
+# Create and wrap environment
+env = gym.make("HalfCheetah-v5")
+env = Monitor(env)
 
-# Run 3 episodes
-for episode in range(3):
-    obs, _ = env.reset()
-    done = False
-    total_reward = 0
+print("Observation space:", env.observation_space)
+print("Action space:", env.action_space)
 
-    while not done:
-        action, _ = model.predict(obs)
-        obs, reward, terminated, truncated, _ = env.step(action)
-        total_reward += reward
-        done = terminated or truncated
-        time.sleep(0.02)
+# Configure logger for TensorBoard
+new_logger = configure("logs/halfcheetah", ["stdout", "tensorboard"])
 
-    print(f"Episode {episode+1} Total Reward: {total_reward:.2f}")
+# Initialize PPO agent
+model = PPO(
+    policy="MlpPolicy",
+    env=env,
+    verbose=1,
+    tensorboard_log="./logs/halfcheetah",
+)
+
+model.set_logger(new_logger)
+
+# Train the agent
+model.learn(total_timesteps=500_000)
+
+# Save model
+model.save("models/ppo_halfcheetah")
 
 env.close()
