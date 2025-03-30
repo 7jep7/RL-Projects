@@ -22,7 +22,7 @@ os.makedirs("logs/halfcheetah_gpu", exist_ok=True)
 os.makedirs("models", exist_ok=True)
 
 # Use 4 parallel environments
-NUM_ENVS = 4
+NUM_ENVS = 8
 
 def make_env():
     def _init():
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     model.set_logger(new_logger)
 
     # Train the agent
-    model.learn(total_timesteps=500_000)
+    model.learn(total_timesteps=2_000_000)
 
     # Save model
     model.save("models/ppo_halfcheetah_gpu")
