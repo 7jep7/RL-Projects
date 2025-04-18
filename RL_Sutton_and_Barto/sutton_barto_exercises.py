@@ -64,17 +64,20 @@ def plot_results(avg_rewards, perc_optimal_actions, labels):
     fig.tight_layout()
     plt.show()
 
-def run_jack_car_rental_experiment(num_cars=20, num_days=30, num_runs=10, rental_rate=10, return_rate=3, gamma=0.9):
+def run_jack_car_rental_experiment(num_cars=20, num_days=500, num_runs=50, gamma=0.9):
+    CAR_MOVING_COST = 2
+    RENTAL_REVENUE = 10 # Cost of renting a car
+
     V = np.zeros((num_cars + 1, num_cars + 1))
 
     def rental_request(location):
-        return np.random.poisson(3 if location == 1 else 4)
+        return np.random.poisson(2 if location == 1 else 4)
 
     def car_return(location):
         return np.random.poisson(3 if location == 1 else 2)
 
     def reward(cars_loc1, cars_loc2, cars_moved):
-        return rental_rate * (cars_loc1 + cars_loc2) - (abs(cars_moved) * 2)
+        return RENTAL_REVENUE * (cars_loc1 + cars_loc2) - (abs(cars_moved) * CAR_MOVING_COST)
 
     policy = np.zeros((num_cars + 1, num_cars + 1), dtype=int)
     for run in range(num_runs):
@@ -82,7 +85,7 @@ def run_jack_car_rental_experiment(num_cars=20, num_days=30, num_runs=10, rental
             for s1 in range(num_cars + 1):
                 for s2 in range(num_cars + 1):
                     action_values = []
-                    for a in range(-min(s2, num_cars - s1), min(s1, num_cars - s2) + 1):
+                    for a in range(max(-5, -min(s2, num_cars - s1)), min(5, min(s1, num_cars - s2)) + 1):
                         cars_rented_loc1 = min(s1 - a, rental_request(1))
                         cars_rented_loc2 = min(s2 + a, rental_request(2))
 
@@ -107,9 +110,9 @@ def plot_policy(policy, num_cars):
         policy (np.ndarray): The policy array with shape (num_cars + 1, num_cars + 1).
         num_cars (int): The maximum number of cars at each location.
     """
-    plt.figure(figsize=(10, 8))
-    plt.imshow(policy.T, origin="lower", cmap="coolwarm", extent=[0, num_cars, 0, num_cars])
-    plt.colorbar(label="Number of Cars Moved")
+    plt.figure(figsize=(5, 4))
+    plt.imshow(policy, origin="lower", cmap="coolwarm", extent=[0, num_cars, 0, num_cars])
+    plt.colorbar(label="Number of Cars Moved from loc1 to loc2")
     plt.title("Optimal Policy for Jack's Car Rental Problem")
     plt.xlabel("Cars at Location 1 (s1)")
     plt.ylabel("Cars at Location 2 (s2)")
